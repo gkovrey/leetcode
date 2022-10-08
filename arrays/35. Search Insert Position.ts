@@ -1,26 +1,25 @@
 function searchInsert(nums: number[], target: number): number {
     if (nums.length == 0) return 0;
-    if (target <= (nums?.at(0) || 0)) return 0;
-    if (target > (nums?.at(-1) || 0)) return nums.length;
+    if (target <= (nums.at(0) || 0)) return 0;
+    if (target > (nums.at(-1) || 0)) return nums.length;
 
-    let middle = Math.floor((nums.length)/2);
+    let middle = Math.round( nums.length / 2);
+    let diff = Math.round(middle / 2);
     while (true) {
-        let average = nums.at(middle) || 0;
-        if (target == average) return middle;
+        let value = nums.at(middle) || 0;
+        if (target == value) return middle;
+        if (target > value && target < (nums.at(middle + 1) || 0)) return middle + 1;
+        if (target <= value && target > (nums.at(middle - 1) || 0)) return middle;
 
-        if (target > average && target < (nums.at(middle + 1) || 0)) return middle + 1;
-        if (target <= average && target > (nums.at(middle - 1) || 0)) return middle;
-        if (target > average) {
-            middle = Math.round(middle + (nums.length - middle) / 2);
+        if (target > value) {
+            middle += diff;
         } else {
-            middle = Math.floor(middle / 2);
+            middle -= diff;
         }
 
-        if (middle >= nums.length) return nums.length;
-        if (middle == 0 ) return  0;
+        diff = Math.round(diff / 2);
     }
-
-};
+}
 
 
 console.log(searchInsert([1,3,5,6],5)); // 2
