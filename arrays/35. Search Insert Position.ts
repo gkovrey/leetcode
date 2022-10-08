@@ -1,24 +1,19 @@
 function searchInsert(nums: number[], target: number): number {
-    if (nums.length == 0) return 0;
-    if (target <= (nums.at(0) || 0)) return 0;
-    if (target > (nums.at(-1) || 0)) return nums.length;
+    if (target < nums[0]) return 0;
+    if (target > nums[nums.length -1]) return nums.length;
 
-    let middle = Math.round( nums.length / 2);
-    let diff = Math.round(middle / 2);
-    while (true) {
-        let value = nums.at(middle) || 0;
-        if (target == value) return middle;
-        if (target > value && target < (nums.at(middle + 1) || 0)) return middle + 1;
-        if (target <= value && target > (nums.at(middle - 1) || 0)) return middle;
-
-        if (target > value) {
-            middle += diff;
+    let start = 0, end = nums.length - 1;
+    while (start <= end) {
+        let mid = Math.round(start + (end - start) / 2);
+        if (target == nums[mid]) return mid;
+        if (nums[mid] < target) {
+            start = mid + 1;
         } else {
-            middle -= diff;
+            end = mid - 1;
         }
-
-        diff = Math.round(diff / 2);
     }
+
+    return start;
 }
 
 
